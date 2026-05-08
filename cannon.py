@@ -16,6 +16,9 @@ from freegames import vector
 ball = vector(-200, -200)
 speed = vector(0, 0)
 targets = []
+PROJECTILE_SPEED_MULTIPLIER = 1.5
+TARGET_SPEED = 1.2
+FRAME_DELAY = 30
 
 
 def tap(x, y):
@@ -23,8 +26,8 @@ def tap(x, y):
     if not inside(ball):
         ball.x = -199
         ball.y = -199
-        speed.x = (x + 200) / 25
-        speed.y = (y + 200) / 25
+        speed.x = (x + 200) / 25 * PROJECTILE_SPEED_MULTIPLIER
+        speed.y = (y + 200) / 25 * PROJECTILE_SPEED_MULTIPLIER
 
 
 def inside(xy):
@@ -55,7 +58,7 @@ def move():
         targets.append(target)
 
     for target in targets:
-        target.x -= 0.5
+        target.x -= TARGET_SPEED
 
     if inside(ball):
         speed.y -= 0.35
@@ -74,7 +77,7 @@ def move():
         if not inside(target):
             return
 
-    ontimer(move, 50)
+    ontimer(move, FRAME_DELAY)
 
 
 setup(420, 420, 370, 0)
